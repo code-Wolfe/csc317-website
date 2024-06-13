@@ -10,9 +10,9 @@ Please follow the instructions below and fill in the information requested when 
 
 |               | Information   |
 |:-------------:|:-------------:|
-| Student Name  | name-here     |
-| Student ID    | id-here       |
-| Student Email | email-here    |
+| Student Name  | Max Cole      |
+| Student ID    | 922901509     |
+| Student Email | Mcole6@sfsu.edu|
 
 
 
