@@ -4,50 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
+    <div class = "container">
     <!-- Banner -->
-    <header>
-        <h1>Registration Page</h1>
-        <!-- Nav bar -->
-        <nav>
-            <ul>
-                <li><a href = "index.html">Home</a></li>
-                <li><a href = "login.html">Login</a></li>
-                <li><a href = "postvideo.html">Post Video</a></li>
-                <li><a href = "viewpost.html">View Post</a></li>
-            </ul>
-        </nav>
+        <header class = "header">
+            <h1>Registration Page</h1>
+            <!-- Nav bar -->
+            <nav>
+                <ul class = "links">
+                    <li><a href = "index.html">Home</a></li>
+                    <li><a href = "login.html">Login</a></li>
+                    <li><a href = "postvideo.html">Post Video</a></li>
+                    <li><a href = "viewpost.html">View Post</a></li>
+                </ul>
+            </nav>
 
-    </header>
+        </header>
 
 
-    <!-- Main Content -->
-    <main>
-        <section>
-            <h2>Register an Account</h2>
-            <form>
-                <label for = "username">Username</label>
-                <input type = "text" name = "username"><br>
+        <!-- Main Content -->
+        <main class = "main registration-main">
+            <section class = "content registration-main">
+                <h2>Register an Account</h2>
+                <form>
+                    <label for = "username">Username</label>
+                    <input type = "text" name = "username"><br>
 
-                <label for = "password">Password</label>
-                <input type = "password" name = "password"><br>
+                    <label for = "password">Password</label>
+                    <input type = "password" name = "password"><br>
 
-                <label for = "password">Confirm Password</label>
-                <input type = "password" name = "password"><br>
+                    <label for = "password">Confirm Password</label>
+                    <input type = "password" name = "password"><br>
 
-                <input type="checkbox">
-                <label>I am 13+ years of age</label><br>
+                    <input type="checkbox">
+                    <label>I am 13+ years of age</label><br>
 
-                <input type="checkbox">
-                <label>I accept the <a href = "#">TOS and privacy rules</a></label><br>
+                    <input type="checkbox">
+                    <label>I accept the <a href = "#">TOS and privacy rules</a></label><br>
 
-                <button type="submit">Register</button>
+                    <button type="submit">Register</button>
 
-            </form>
-        </section>
-    </main>
+                </form>
+            </section>
+        </main>
+
+        <footer class = "footer index-footer">
+            <p>Max Cole @ SFSU</p>
+        </footer>        
+    </div>
+   
+
 
 </body>
 </html>

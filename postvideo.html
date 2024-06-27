@@ -4,46 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>post video</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Banner -->
-    <header>
-        <h1>Post a Video</h1>
 
-        <!-- Nav bar -->
-        <nav>
-            <ul>
-                <li><a href = "index.html">Home</a></li>
-                <li><a href = "login.html">Login</a></li>
-                <li><a href = "registration.html">Registration</a></li>
-                <li><a href = "viewpost.html">View Post</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class = "container">
+        <!-- Banner -->
+        <header class = "header">
+            <h1>Post Video</h1>
 
+            <!-- Nav bar -->
+            <nav>
+                <ul class = "links">
+                    <li><a href = "index.html">Home</a></li>
+                    <li><a href = "login.html">Login</a></li>
+                    <li><a href = "registration.html">Registration</a></li>
+                    <li><a href = "viewpost.html">View Post</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        
+
+        <!-- Main Content -->
+        <main class = "main post-main">
+            <section class = "content post-content">
+                <h2>Upload Video</h2>
+                <form class = "input post-input">
+                    <label for = "title">Title: </label>
+                    <input type = "text" name = "title"><br>
+
+                    <label for = "title">Description: </label>
+                    <input type = "text" name = "description"><br>
+
+                    <label for = "title">Upload Video: </label>
+                    <input type = "file" name = "video"><br>
+
+                    <input type = "checkbox">
+                    <label>I accept the <a href = "#">Acceptable Use Policy for uploading videos</a></label><br>
+
+                    <button type="submit">Upload</button>
+                </form>
+            </section>
+        </main>
+
+        
+        <footer class = "footer index-footer">
+            <p>Max Cole @ SFSU</p>
+        </footer>
+    </div>
     
-
-    <!-- Main Content -->
-    <main>
-        <section>
-            <h2>Upload a video</h2>
-            <form>
-                <label for = "title">Title: </label>
-                <input type = "text" name = "title"><br>
-
-                <label for = "title">Description: </label>
-                <input type = "text" name = "description"><br>
-
-                <label for = "title">Upload Video: </label>
-                <input type = "file" name = "video"><br>
-
-                <input type = "checkbox">
-                <label>I accept the <a href = "#">Acceptable Use Policy for uploading videos</a></label><br>
-
-                <button type="submit">Upload</button>
-            </form>
-        </section>
-    </main>
 
 </body>
 </html>
