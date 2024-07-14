@@ -1,0 +1,293 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    list-style-type: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+
+
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    background-color: #1f2937;
+    color: white;
+    justify-content: space-between;
+    flex-shrink: 0;
+    font-family: 'Times New Roman', Times, serif;
+    padding: 16px 32px;
+    font-size: 24px;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+ul li a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: rgb(196, 196, 196);
+}
+
+a:hover {
+    color: rgb(143, 143, 211);
+}
+
+main{
+    display: flex;
+    flex: 1;
+}
+.content {
+    display: flex;
+    background-color: #e5e7eb;
+    flex-direction: column;
+    align-items: center;
+    flex: 1; 
+    gap: 15px;
+    border: 15px;
+}
+
+.content h2 {
+    text-align: center;
+    font-size: 36px;
+    color: #1F2937;
+    font-style: italic;
+    font-weight: lighter;
+    font-family: 'Roboto', Arial, sans-serif;
+    margin-top: 20px;
+}
+
+.content p {
+    font-size: 25px;
+    padding: 20px 10px 20px 10px;
+    margin: 50px 200px;
+    text-align: center;
+}
+
+.footer {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    background-color: #1f2937;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    flex-shrink: 0; 
+}
+
+form label, form input, form button {
+    margin: 10px 0;
+}
+
+/* Login/Registration */
+
+.container-login {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #e5e7eb;
+}
+
+.login-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1f2937;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+form button:hover {
+    background-color: #374151;
+}
+
+.validation-message {
+    color: #ef4444;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Checkbox styles */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin: 0;
+    margin-right: 10px;
+    margin-top: 3px; 
+}
+
+.checkbox-group label {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.4; 
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4b5563;
+    font-size: 14px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+}
+
+/* figuring this out was a pain this is good enough */
+input[type="checkbox"] {
+    width: auto;
+    height: auto;
+}
+
+.validation-message {
+    color: red;
+    font-size: 0.8em;
+    display: block;
+    margin-top: 5px;
+    white-space: pre-line;
+}
+
+/* index CSS */
+
+#main-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: #e5e7eb;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    width: 200px;  
+    height: 220px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card p {
+    padding: 10px;
+    margin: 0;
+    font-size: 14px;
+    color: #1f2937;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 0 auto; 
+}
+
+.card img {
+    width: 100%;
+    height: 180px; /* Fixed height for images */
+    object-fit: cover; /* Maintain aspect ratio and cover area */
+    display: block;
+    flex: 1 1 auto; /* Allow image to fill remaining space */
+}
+
+/* Counter styles */
+.counter-container {
+    background-color: #1f2937;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out;
+}
