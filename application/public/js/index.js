@@ -1,6 +1,6 @@
 function updateThumbnailCount(){
     const count = document.querySelectorAll('.card').length;
-    document.getElementById('counter').textContent = `Cards on screen:${count} `; //+ count;
+    document.getElementById('counter').textContent = `Thumbnails on screen:${count} `; //+ count;
 }
 
 function buildCardHTML(data){

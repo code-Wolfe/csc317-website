@@ -1,3 +1,5 @@
+
+//Get references to input elements 
 const usernameInput = document.getElementById('username');
 const usernameValidation = document.getElementById('usernameValidation');
 
@@ -10,26 +12,32 @@ const confirmPasswordValidation = document.getElementById('confirmPasswordValida
 const emailInput = document.getElementById('email');
 const emailValidation = document.getElementById('emailValidation');
 
+//counts alphaneumeric characters in a string
 function countLetters(str){
-    let letterCount = 0; 
+    let count = 0; 
     for(let char of str){
-        if ((char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z')){
-            letterCount++;
+        if ((char >= 'a' && char <= 'z') || 
+            (char >= 'A' && char <= 'Z') || 
+            (char >= '0' && char <= '9')) {
+            count++;
         }
     }
-    return letterCount;
+    return count;
 }
+
+//returns true if given string starts with a letter
 function startWithLetter(str){
     if (str.length === 0) return;
     const firstChar = str[0].toLowerCase();
     return firstChar >= 'a' && firstChar <= 'z';
 }
 
+//makes sure username fits criteria 
 function validateUsername(username){
     let messages = [];
 
     if(countLetters(username) < 3){
-        messages.push("Username needs to have 3 non-numerical characters");
+        messages.push("Username needs to have 3 alphaneumerical characters");
     }
 
     if(!startWithLetter(username)){
@@ -39,12 +47,14 @@ function validateUsername(username){
     return messages;
 }
 
+//makes sure password fits criteria
 function validatePassword(password){
     let messages = [];
     if(password.length < 8){
         messages.push("Password must be at least 8 characters long");
     }
 
+    //checks if password has a number, an uppercase letter, and a special character
     let hasNumber = false;
     let hasUpperCase = false;
     let hasSpecialChar = false;
@@ -90,6 +100,7 @@ function validateEmail(email) {
     return messages;
 }
 
+//makes sure password and confirmPassword are equal
 function checkPasswordMatch(){
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
@@ -102,6 +113,7 @@ function checkPasswordMatch(){
     }
 }
 
+//adds event listeners to input fields, and adds functions to check if inputs are valid
 document.getElementById('username').addEventListener('input', function(e){
     const username = e.target.value;
     console.log("Username: ", username);
@@ -130,7 +142,7 @@ document.getElementById('email').addEventListener('input', function(e) {
 });
 
 
-
+//turns on button if no errors
 function updateButtonState(){
     const usernameValid = validateUsername(usernameInput.value).length === 0;
     const passwordValid = validatePassword(passwordInput.value).length === 0;
