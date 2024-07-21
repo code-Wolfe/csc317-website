@@ -1,0 +1,45 @@
+
+
+        <main class="registration-main" role="main">
+            <section class="content registration-main">
+                <h2>Register an Account</h2>
+                <form id="registrationForm">
+                    <div>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                        <span id="usernameValidation" class="validation-message"></span>
+                    </div>
+
+                    <div>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                        <div id="emailValidation" class="validation-message"></div>
+                    </div>
+
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <div id="passwordValidation" class="validation-message"></div>
+                    </div>
+
+                    <div>
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword">
+                        <div id="confirmPasswordValidation" class="validation-message"></div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="ageCheck" name="ageCheck" required>
+                        <label for="ageCheck">I am 13+ years of age</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="tosCheck" name="tosCheck" required>
+                        <label for="tosCheck">I accept the <a href="#">TOS and privacy rules</a></label>
+                    </div>
+
+                    <button type="submit" id = "submitButton" disabled>Register</button>
+                </form>
+            </section>
+        </main>
+

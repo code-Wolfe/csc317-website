@@ -3,9 +3,16 @@
   <head>
     <title>{{title}}</title>
     <link rel="icon" href="/public/favicon.ico" sizes="70x70" type="image/ico">
-    <link rel='stylesheet' href='/public/css/style.css' />
+    <link rel='stylesheet' href='/public/css/styles.css' />
   </head>
   <body>
-    {{{body}}}
+        <div class="container">
+        {{> header}}
+        {{{body}}}
+        {{> footer}}
+    </div>
+    <script src="/public/js/index.js"></script>
+    <script src="/public/js/login.js"></script>
+    <script src="/public/js/registration.js"></script>
   </body>
 </html>
