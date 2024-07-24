@@ -12,8 +12,8 @@ router.get('/login', function(req, res, next) {
 });
 
 /* GET registration page. */
-router.get('/registration', function(req, res, next) {
-  res.render('registration', { title: 'Registration' });
+router.get('/register', function(req, res, next) {
+  res.render('register', { title: 'Register' });
 });
 
 /* GET post video page. */
