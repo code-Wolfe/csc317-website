@@ -76,7 +76,8 @@ router.post('/login', async function(req,res,next){
 
     if(match){
       //login successful
-      // TODO: session management
+      req.session.userId = user.id;//store user id in session
+      req.session.username = user.username //store username as well
 
       console.log("login successful");
       res.redirect('/');
@@ -92,8 +93,19 @@ router.post('/login', async function(req,res,next){
 
 })
 
-// log out user - wait until sessions
-router.post('/logout',function(req,res,next){
+// log out user
+router.get('/logout',function(req,res,next){
+  req.session.destroy((err) => {
+    if(err){
+      return console.log(err);
+    }
+    res.clearCookie('connect.sid') //clear cookie
+    res.redirect('/');
+  });
+});
+
+//user profile
+router.get('/profile', async function(req, res, next) {
 
 })
 

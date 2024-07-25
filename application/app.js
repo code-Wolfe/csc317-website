@@ -7,6 +7,7 @@ const logger = require("morgan");
 const handlebars = require("express-handlebars");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const session = require('express-session');
 
 const app = express();
 
@@ -25,7 +26,6 @@ app.engine(
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,18 +34,45 @@ app.use(cookieParser());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
+/**
+ * Session handling 
+ */
+app.use(session({
+  secret:  'secretKey',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}));
+
+/**
+ * Make session available
+ */
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = !!req.session.userId;
+  res.locals.username = req.session.username;
+  next();
+})
+
+//debugging
+app.use((req, res, next) => {
+  console.log('Session:', req.session);
+  console.log('isLoggedIn:', res.locals.isLoggedIn);
+  next();
+});
+
 app.use("/", indexRouter); // route middleware from ./routes/index.js
 app.use("/users", usersRouter); // route middleware from ./routes/users.js
-
 
 /**
  * Catch all route, if we get to here then the 
  * resource requested could not be found.
  */
-app.use((req,res,next) => {
+app.use((req, res, next) => {
   next(createError(404, `The route ${req.method} : ${req.url} does not exist.`));
 })
-  
 
 /**
  * Error Handler, used to render the error html file
