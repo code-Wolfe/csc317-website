@@ -1,4 +1,4 @@
-/*
+
 
 //Get references to input elements 
 const usernameInput = document.getElementById('username');
@@ -165,4 +165,3 @@ confirmPasswordInput.addEventListener('input', updateButtonState);
 
 updateButtonState();
 
-*/

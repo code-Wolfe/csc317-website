@@ -81,7 +81,7 @@ router.post('/login', async function(req,res,next){
       console.log("login successful");
       res.redirect('/');
     } else {
-      console.log("login failed")
+      console.log("login failed");
       res.redirect('/login?error=invalid');
     }
 
