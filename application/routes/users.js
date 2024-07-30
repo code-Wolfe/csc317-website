@@ -94,7 +94,7 @@ router.post('/login', async function(req,res,next){
 })
 
 // log out user
-router.get('/logout',function(req,res,next){
+router.get('/logout',async function(req,res,next){
   req.session.destroy((err) => {
     if(err){
       return console.log(err);
@@ -104,10 +104,22 @@ router.get('/logout',function(req,res,next){
   });
 });
 
-//user profile
-router.get('/profile', async function(req, res, next) {
+// user profile
+router.get('/profile',async function(req, res, next){
+  if(!req.session.userId){
+    return res.redirect('/login');
+  }
 
-})
+  try{
+    const [user] = await db.query('SELECT * FROM users WHERE id = ?', [req.session.userId]);
+
+    if(!user) { return res.status(404).send('User not found');}
+
+    res.render('profile', {title: 'User Profile', user: user[0]});
+  }catch(err){
+    next(err);
+  }
+});
 
 router.get('/:id(\\d+)', function(req,res,next){
 

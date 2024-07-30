@@ -389,3 +389,24 @@ input[type="checkbox"] {
 .register-link a:hover {
     text-decoration: underline;
 }
+.profile-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-container h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .profile-container h2 {
+    color: #444;
+    font-size: 22px;
+    margin-bottom: 15px;
+  }

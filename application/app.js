@@ -8,8 +8,28 @@ const handlebars = require("express-handlebars");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const session = require('express-session');
+const SQLStore = require('express-mysql-session')(session);
 
 const app = express();
+
+//database config
+const options = {
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '12345678',
+  database: 'videoapp'
+};
+
+const sessionStore = new SQLStore(options);
+
+app.use(session({
+  key: 'videoapp_session',
+  secret: '12345',
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false
+}))
 
 app.engine(
   "hbs",
