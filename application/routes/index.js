@@ -26,4 +26,5 @@ router.get('/viewpost', function(req, res, next) {
   res.render('viewpost', { title: 'View Post' });
 });
 
+
 module.exports = router;

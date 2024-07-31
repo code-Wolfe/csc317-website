@@ -7,8 +7,11 @@ const logger = require("morgan");
 const handlebars = require("express-handlebars");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const postsRouter = require("./routes/posts"); 
+
 const session = require('express-session');
 const SQLStore = require('express-mysql-session')(session);
+const flash = require('express-flash');
 
 const app = express();
 
@@ -21,15 +24,24 @@ const options = {
   database: 'videoapp'
 };
 
-const sessionStore = new SQLStore(options);
+//const sessionStore = new SQLStore(options);
+const sessionStore = new SQLStore({ /** default options */}, require('./conf/database'));
 
 app.use(session({
   key: 'videoapp_session',
   secret: '12345',
   store: sessionStore,
   resave: false,
-  saveUninitialized: false
-}))
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    maxAge: 1000*60*10 //10 min
+  }
+}));
+
+
+
+
 
 app.engine(
   "hbs",
@@ -38,7 +50,11 @@ app.engine(
     partialsDir: path.join(__dirname, "views/partials"), // where to look for partials
     extname: ".hbs", //expected file extension for handlebars files
     defaultLayout: "layout", //default layout for app, general template for all pages in app
-    helpers: {}, //adding new helpers to handlebars for extra functionality
+    helpers: {
+      nonEmptyObject: function(obj){
+        return obj && obj.constructor === Object && Object.keys(obj).length > 0;
+      } 
+    }, //adding new helpers to handlebars for extra functionality
   })
 );
 
@@ -46,33 +62,31 @@ app.engine(
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
+app.use(flash());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('12345'));
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-/**
- * Session handling 
- */
-app.use(session({
-  secret:  'secretKey',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { 
-    secure: false,
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
-  }
-}));
+
 
 /**
  * Make session available
  */
 app.use((req, res, next) => {
-  res.locals.isLoggedIn = !!req.session.userId;
-  res.locals.username = req.session.username;
+  res.locals.isLoggedIn = !!req.session.user;
+  
+  if (req.session.user) {
+    res.locals.username = req.session.user.username;
+    res.locals.userId = req.session.user.userId;  // Add this line
+  } else {
+    res.locals.username = null;
+    res.locals.userId = null;  // Add this line
+  }
+  
   next();
 })
 
@@ -83,8 +97,17 @@ app.use((req, res, next) => {
   next();
 });
 
+//debugging flash
+app.use((req, res, next) => {
+  console.log('Session:', req.session);
+  console.log('Flash messages:', req.flash());
+  next();
+});
+
+
 app.use("/", indexRouter); // route middleware from ./routes/index.js
 app.use("/users", usersRouter); // route middleware from ./routes/users.js
+app.use("/posts", postsRouter)
 
 /**
  * Catch all route, if we get to here then the 

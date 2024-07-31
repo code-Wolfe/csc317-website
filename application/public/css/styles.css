@@ -410,3 +410,45 @@ input[type="checkbox"] {
     font-size: 22px;
     margin-bottom: 15px;
   }
+
+  /* flash message */
+  #flash-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+}
+
+.alert-danger {
+    background-color: #f44336;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}

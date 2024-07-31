@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../conf/database')
+const db = require('../conf/database');
 const bcrypt = require('bcrypt');
+const { isLoggedIn, isMyProfile } = require('../middleware/auth'); 
 
 /* GET users listing. */
 /*router.get('/', function(req, res, next) {
@@ -24,7 +25,7 @@ router.post('/register', async function(req,res,next){
 
     // check username, password, checkPassword and email validation goes here
     var [rows, fields] = await db.query(`SELECT * FROM users where username =?`,[username])
-    if(rows?.lenth){
+    if(rows?.length){
       return res.redirect('/register');
     }
 
@@ -72,18 +73,34 @@ router.post('/login', async function(req,res,next){
 
     const user = rows[0];
     //get hashed password and call bcrypt.compare
-    const match = await bcrypt.compare(password, user.password);
+    const match = await bcrypt.compare(password, user.password); 
 
     if(match){
       //login successful
-      req.session.userId = user.id;//store user id in session
-      req.session.username = user.username //store username as well
+      //req.session.userId = user.id;//store user id in session
+      //req.session.username = user.username //store username as well
+      req.session.user = {
+        username: user.username,
+        userId: user.id,
+        email: user.email
+      }
+      req.flash('success', 'You have successfully logged in');
+      console.log('Flash messages:', req.flash());
 
-      console.log("login successful");
-      res.redirect('/');
+      req.session.save((err) =>{
+        //console.log("login successful");
+        //req.flash('success', 'You have successfully logged in');
+        res.redirect('/');
+      });
+
+
     } else {
-      console.log("login failed");
-      res.redirect('/login?error=invalid');
+      //console.log("login failed");
+      req.flash('error', "Invalid username or password");
+      //res.redirect('/login?error=invalid');
+      req.session.save((err => {
+        res.redirect('/login?error=invalid');
+      }))
     }
 
   }catch (err){
@@ -92,6 +109,7 @@ router.post('/login', async function(req,res,next){
   }
 
 })
+//test
 
 // log out user
 router.get('/logout',async function(req,res,next){
@@ -104,14 +122,17 @@ router.get('/logout',async function(req,res,next){
   });
 });
 
-// user profile
-router.get('/profile',async function(req, res, next){
-  if(!req.session.userId){
+//user profile
+router.get('/:id(\\d+)', isLoggedIn, isMyProfile, async function(req,res,next){
+  //var userId = req.params.id;
+  //res.render('profile');
+
+  if(!req.session.user || !req.session.user.userId){
     return res.redirect('/login');
   }
 
   try{
-    const [user] = await db.query('SELECT * FROM users WHERE id = ?', [req.session.userId]);
+    const [user] = await db.query('SELECT * FROM users WHERE id = ?', [req.session.user.userId]);
 
     if(!user) { return res.status(404).send('User not found');}
 
@@ -119,10 +140,6 @@ router.get('/profile',async function(req, res, next){
   }catch(err){
     next(err);
   }
-});
-
-router.get('/:id(\\d+)', function(req,res,next){
-
 })
 
 module.exports = router;
