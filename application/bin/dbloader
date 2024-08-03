@@ -64,20 +64,19 @@ async function makePostsTable(connection) {
   const [result, _] = await connection.query(
     // Posts Table SQL Goes here
     `CREATE TABLE IF NOT EXISTS  videoapp . posts  (
-      id  INT UNSIGNED NOT NULL AUTO_INCREMENT,
-      title  TEXT NOT NULL,
-      description  TEXT NOT NULL,
-      video  VARCHAR(4096) NOT NULL,
-      thumbnail  VARCHAR(4096) NOT NULL,
-      created_at  TIMESTAMP NOT NULL DEFAULT 'current_timestamp',
-      fk_user_id  INT UNSIGNED NOT NULL,
-     PRIMARY KEY ( id ),
-     UNIQUE INDEX  id_UNIQUE  ( id  ASC) VISIBLE,
-     CONSTRAINT  fk_to_users_table 
-       FOREIGN KEY ( id )
-       REFERENCES  videoapp . users  ( id )
-       ON DELETE NO ACTION
-       ON UPDATE NO ACTION)
+      id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      video VARCHAR(4096) NOT NULL,
+      thumbnail VARCHAR(4096) NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      fk_user_id INT UNSIGNED NOT NULL,
+      PRIMARY KEY (id),
+      UNIQUE KEY id_UNIQUE (id),
+      KEY fk_posts_users (fk_user_id),
+      CONSTRAINT fk_posts_users FOREIGN KEY (fk_user_id) REFERENCES users (id)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
    ENGINE = InnoDB;
     `
   );

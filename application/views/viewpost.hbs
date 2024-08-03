@@ -1,17 +1,24 @@
 
+<main class="main view-main">
+    <section class="content view-content">
+        {{#if currentPost}}
+        <p>{{currentPost.title}}</p>
+        <div class="post-meta">
+            <span class="username-wrapper"><a class="username-link">{{currentPost.username}}</a></span>
+            <span class="post-time">{{currentPost.created_at}}</span>
+        </div>
 
-        <!-- Main Content -->
-<main class = "main view-main">
-            <section class = "content view-content">
-                <h2>Title</h2>
-                <p>Author:</p>
-                <p>Posted on:</p>
-                <video controls poster="#"><source src="#" type="video/mp4"></video>
+            <video controls poster="#">
+                <source src="/{{currentPost.video}}" type="video/mp4">
+            </video>
+            <p>{{currentPost.description}}</p>
 
-
-            <section class = "comments">
+            <section class="comments">
                 <h2>Comments</h2>
+                <!-- Add comments here if you have any -->
             </section>
-            </section>
-
+        {{else}}
+            <p>Post not found</p>
+        {{/if}}
+    </section>
 </main>

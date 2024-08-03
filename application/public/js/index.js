@@ -11,48 +11,48 @@ function buildCardHTML(data){
 </div>`;
 }
 
-var result = fetch("https://jsonplaceholder.typicode.com/albums/2/photos")
-    .then(function(resp){
-        //promise chain
-        return resp.json();
-    })
-    .then(function(photo){
+// var result = fetch("https://jsonplaceholder.typicode.com/albums/2/photos")
+//     .then(function(resp){
+//         //promise chain
+//         return resp.json();
+//     })
+//     .then(function(photo){
         
         
-        let main_content = document.getElementById('main-content');
+//         let main_content = document.getElementById('main-content');
 
-        main_content.innerHTML = ''; //fixed bug that was messing with grid view
+//         main_content.innerHTML = ''; //fixed bug that was messing with grid view
 
-        for(let i =  0; i < photo.length;i++){
-            main_content.innerHTML += buildCardHTML(photo[i]);
-        }
+//         for(let i =  0; i < photo.length;i++){
+//             main_content.innerHTML += buildCardHTML(photo[i]);
+//         }
         
-        //sets original thumbnail count
-        updateThumbnailCount();
+//         //sets original thumbnail count
+//         updateThumbnailCount();
 
-        //makes array of all thumbnails on screen
-        let cards = document.querySelectorAll('.card');
+//         //makes array of all thumbnails on screen
+//         let cards = document.querySelectorAll('.card');
         
     
 
-        //for each that calls a function on each thumbnail, adding a click event listener
-        cards.forEach(function(card) {
-            card.addEventListener('click',function(){
-                this.classList.add('fade-out');
-                setTimeout(() =>{ 
-                    //Arrow notation treats this differently so this breaks if function(){} instead 
-                    // has to do with scope of this being different depending on arrow function
-                    this.remove();
-                    updateThumbnailCount();
-                },500); //remove after 500ms, matches with CSS
-            })
+//         //for each that calls a function on each thumbnail, adding a click event listener
+//         cards.forEach(function(card) {
+//             card.addEventListener('click',function(){
+//                 this.classList.add('fade-out');
+//                 setTimeout(() =>{ 
+//                     //Arrow notation treats this differently so this breaks if function(){} instead 
+//                     // has to do with scope of this being different depending on arrow function
+//                     this.remove();
+//                     updateThumbnailCount();
+//                 },500); //remove after 500ms, matches with CSS
+//             })
 
-        })
+//         })
 
-    })
-    .catch(function(error){
-        console.log(error)
-    });
+//     })
+//     .catch(function(error){
+//         console.log(error)
+//     });
 
 //hamburger
 document.addEventListener('DOMContentLoaded', (event) => {
