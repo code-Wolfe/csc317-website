@@ -34,13 +34,14 @@ router.post("/create", isLoggedIn, upload.single('videoUpload'), makeThumbnail, 
             [title,description,path,thumbnail,userId]);
 
             if(resultObj.affectedRows === 1){
-                console.log("Success, your post has been created");
+                //console.log("Success, your post has been created");
+                req.flash('success', 'your post has been created');
                 return req.session.save((err)=>{
                     if(err) next(err);
                     res.redirect(`/posts/${resultObj.insertId}`)
                 })  
             }else{
-                console.log("error your post cant be created");
+                //console.log("error your post cant be created");
                 return req.session.save((err)=>{
                     if(err) next(err);
                     console.out("HERE");
@@ -62,6 +63,21 @@ router.get('/:id(\\d+)', getPostsById, function(req, res, next) {
 router.get('/viewpost/:id(\\d+)', function(req, res, next) {
     res.render('viewpost', { title: 'View Post', js: 'viewpost.js' });
   });*/
+
+
+//localhost:3000/post/search?searchterm=term
+router.get("/search", function(req,res,next){
+
+});
+
+router.post("/like/:id(\\d+)", isLoggedIn, function(req,res,next){
+
+})
+
+router.delete("/:id(\\d+)", async function(req,res,next){
+    
+})
+
 
 
 

@@ -10,8 +10,10 @@ const { isLoggedIn, isMyProfile } = require('../middleware/auth');
 }); */
 
 
+
 // register user
 // localhost: 3000/users/register
+// put in validation for register 
 router.post('/register', async function(req,res,next){
 
   /*
@@ -67,7 +69,7 @@ router.post('/login', async function(req,res,next){
 
     //make sure there is only 1 row
     if(rows.length!== 1){
-      console.log("User not found");
+      req.flash('error', "User not found");
       return res.redirect('/login?error=invalid');
     }
 
@@ -77,19 +79,20 @@ router.post('/login', async function(req,res,next){
 
     if(match){
       //login successful
-      //req.session.userId = user.id;//store user id in session
-      //req.session.username = user.username //store username as well
+
       req.session.user = {
         username: user.username,
         userId: user.id,
         email: user.email
       }
+      console.log('Setting success flash message');
       req.flash('success', 'You have successfully logged in');
-      console.log('Flash messages:', req.flash());
+      //console.log('Flash messages after setting:', req.flash());
 
       req.session.save((err) =>{
         //console.log("login successful");
         //req.flash('success', 'You have successfully logged in');
+        //console.log('Flash set for login:', req.flash('success'));
         res.redirect('/');
       });
 
@@ -97,7 +100,6 @@ router.post('/login', async function(req,res,next){
     } else {
       //console.log("login failed");
       req.flash('error', "Invalid username or password");
-      //res.redirect('/login?error=invalid');
       req.session.save((err => {
         res.redirect('/login?error=invalid');
       }))
@@ -109,7 +111,6 @@ router.post('/login', async function(req,res,next){
   }
 
 })
-//test
 
 // log out user
 router.get('/logout',async function(req,res,next){
@@ -130,6 +131,9 @@ router.get('/:id(\\d+)', isLoggedIn, isMyProfile, async function(req,res,next){
   if(!req.session.user || !req.session.user.userId){
     return res.redirect('/login');
   }
+
+
+
 
   try{
     const [user] = await db.query('SELECT * FROM users WHERE id = ?', [req.session.user.userId]);

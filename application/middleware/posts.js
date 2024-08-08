@@ -46,6 +46,11 @@ module.exports = {
 
     },
 
+    getCommentsByPostID: async function(req,res,next){
+
+        const postId = req.params.id;  
+    },
+
     getRecentPosts: async function(req,res,next){
         try{
             const [posts, _] = await db.query(`select p.id, p.title, p.created_at, p.thumbnail from posts p join users u 
@@ -58,5 +63,9 @@ module.exports = {
         }catch(err){
             next(err);
         }
+    },
+
+    getPostsByUserId: async function(req,res,next){
+        const userId = req.params.id;
     }
 }

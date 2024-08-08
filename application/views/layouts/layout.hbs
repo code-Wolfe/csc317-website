@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {{!-- output object to test flash --}} 
     <title>{{title}}</title>
     <link rel="icon" href="/public/favicon.ico" sizes="70x70" type="image/ico">
     <link rel='stylesheet' href='/public/css/styles.css' />
   </head>
   <body>
         {{!-- <div class="container"> --}}
+
+    {{!-- <pre>
+    Debug Messages: {{json messages}}
+    Is Non-Empty Object: {{nonEmptyObject messages}}
+    </pre> --}}
+
 {{#if (nonEmptyObject messages)}}
-  {{>flashmessage messages}}
+  {{> flashmessage}}
 {{/if}}
         
         {{> header}}

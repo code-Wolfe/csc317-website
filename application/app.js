@@ -27,17 +27,6 @@ const options = {
 //const sessionStore = new SQLStore(options);
 const sessionStore = new SQLStore({ /** default options */}, require('./conf/database'));
 
-app.use(session({
-  key: 'videoapp_session',
-  secret: '12345',
-  store: sessionStore,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    maxAge: 1000*60*10 //10 min
-  }
-}));
 
 
 
@@ -53,8 +42,12 @@ app.engine(
     helpers: {
       nonEmptyObject: function(obj){
         return obj && obj.constructor === Object && Object.keys(obj).length > 0;
-      } 
+      },
+      json: function(context) {
+        return JSON.stringify(context, null, 2);
+      }
     }, //adding new helpers to handlebars for extra functionality
+    
   })
 );
 
@@ -62,17 +55,34 @@ app.engine(
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
-app.use(flash());
+
+
+
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser('12345'));
 
+
+app.use(session({
+  key: 'videoapp_session',
+  secret: '12345',
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    maxAge: 1000*60*10 //10 min
+  }
+}));
+
+
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 
-
+app.use(flash());
 /**
  * Make session available
  */
@@ -81,26 +91,20 @@ app.use((req, res, next) => {
   
   if (req.session.user) {
     res.locals.username = req.session.user.username;
-    res.locals.userId = req.session.user.userId;  // Add this line
+    res.locals.userId = req.session.user.userId;  
   } else {
     res.locals.username = null;
-    res.locals.userId = null;  // Add this line
+    res.locals.userId = null;  
   }
   
   next();
 })
 
+
 //debugging
 app.use((req, res, next) => {
   console.log('Session:', req.session);
   console.log('isLoggedIn:', res.locals.isLoggedIn);
-  next();
-});
-
-//debugging flash
-app.use((req, res, next) => {
-  console.log('Session:', req.session);
-  console.log('Flash messages:', req.flash());
   next();
 });
 
