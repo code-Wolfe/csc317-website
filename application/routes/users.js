@@ -17,25 +17,11 @@ const { isLoggedIn, isMyProfile } = require('../middleware/auth');
 // put in validation for register 
 router.post('/register',checkUsername, checkUsernameUnique, checkEmail, checkEmailUnique, checkPasswords ,async function(req,res,next){
 
-  /*
-  console.log(res.body);
-  res.end();
-  res.json(req.body);
-  */
+
   var {username, password,confirmPassword,email} = req.body;
   console.log(req.body);
   try{
 
-    // check username, password, checkPassword and email validation goes here
-    var [rows, fields] = await db.query(`SELECT * FROM users where username =?`,[username])
-    if(rows?.length){
-      return res.redirect('/register');
-    }
-
-    var [rows, fields] = await db.query(`SELECT * FROM users where email =?`,[email])
-    if(rows?.length){
-      return res.redirect('/register');
-    }
 
     //all data is good
     var hashedPassword = await bcrypt.hash(password, 3)
@@ -107,7 +93,7 @@ router.post('/login', async function(req,res,next){
     }
 
   }catch (err){
-    console.error('Login error:', err);
+    req.flash('error', "Account creation failed");
     next(err);
   }
 
@@ -115,11 +101,13 @@ router.post('/login', async function(req,res,next){
 
 // log out user
 router.get('/logout',async function(req,res,next){
+
   req.session.destroy((err) => {
     if(err){
       return console.log(err);
     }
     res.clearCookie('connect.sid') //clear cookie
+    
     res.redirect('/');
   });
 });
