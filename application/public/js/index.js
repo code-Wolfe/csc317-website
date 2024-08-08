@@ -75,3 +75,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         navMenu.classList.remove("active");
     }
 });
+
+function handleFlashMessages() {
+    const flashMessage = document.getElementById('flash-message');
+    if (flashMessage) {
+        setTimeout(() => {
+            flashMessage.style.opacity = '0';
+            setTimeout(() => {
+                flashMessage.remove();
+            }, 500);
+        }, 5000);
+    }
+}
+document.addEventListener('DOMContentLoaded', handleFlashMessages);

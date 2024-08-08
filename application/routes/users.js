@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const db = require('../conf/database');
 const bcrypt = require('bcrypt');
+const {checkUsername, checkUsernameUnique, checkEmail, checkEmailUnique, checkPasswords} = require("../middleware/validation");
 const { isLoggedIn, isMyProfile } = require('../middleware/auth'); 
 
 /* GET users listing. */
@@ -14,7 +15,7 @@ const { isLoggedIn, isMyProfile } = require('../middleware/auth');
 // register user
 // localhost: 3000/users/register
 // put in validation for register 
-router.post('/register', async function(req,res,next){
+router.post('/register',checkUsername, checkUsernameUnique, checkEmail, checkEmailUnique, checkPasswords ,async function(req,res,next){
 
   /*
   console.log(res.body);
