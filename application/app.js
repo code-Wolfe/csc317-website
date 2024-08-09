@@ -8,6 +8,7 @@ const handlebars = require("express-handlebars");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts"); 
+const commentsRouter = require("./routes/comments")
 
 const session = require('express-session');
 const SQLStore = require('express-mysql-session')(session);
@@ -117,6 +118,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter); // route middleware from ./routes/index.js
 app.use("/users", usersRouter); // route middleware from ./routes/users.js
+app.use("/comments",commentsRouter);
 app.use("/posts", postsRouter)
 
 /**

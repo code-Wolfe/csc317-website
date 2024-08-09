@@ -1,22 +1,42 @@
-
 <main class="main view-main">
     <section class="content view-content">
         {{#if currentPost}}
-        <p>{{currentPost.title}}</p>
-        <div class="post-meta">
-            <span class="username-wrapper"><a class="username-link">{{currentPost.username}}</a></span>
-            <span class="post-time">{{formatDate currentPost.created_at}}</span>
-        </div>
+            <p>{{currentPost.title}}</p>
+            <div class="post-meta">
+                <span class="username-wrapper"><a class="username-link">{{currentPost.username}}</a></span>
+                <span class="post-time">{{formatDate currentPost.created_at}}</span>
+            </div>
 
             <video controls poster="#">
                 <source src="/{{currentPost.video}}" type="video/mp4">
             </video>
             <p>{{currentPost.description}}</p>
 
-            <section class="comments">
-                <h2>Comments</h2>
-                <!-- Add comments here if you have any -->
-            </section>
+            <div class="like-section">
+                <button id="likeButton" class="like-button" data-postid="{{currentPost.id}}">
+                    <span class="heart-icon">♥</span> 
+                    <span id="likeCount">{{currentPost.likes}}</span> Likes
+                </button>
+            </div>
+
+            <div class="comments" id="comments">
+                {{#if comments}}
+                    {{#each comments}}
+                        <div class="comment">
+                            <strong class="comment-author">{{this.username}}</strong>
+                            <span class="comment-date">{{formatDate this.created_at}}</span>
+                            <div class="comment-text">{{this.text}}</div>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <p>No comments yet.</p>
+                {{/if}}
+            </div>
+            
+            <form id="commentForm" class="comment-form">
+                <textarea id="commentText" name="commentText" placeholder="Write a comment..."></textarea>
+                <i id="commentButton" type="submit" class="comment-submit" data-postid="{{currentPost.id}}">Post Comment</i>
+            </form>
         {{else}}
             <p>Post not found</p>
         {{/if}}

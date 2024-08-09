@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const db = require("../conf/database");
 const { isLoggedIn } = require('../middleware/auth');
-const {getPostsById, makeThumbnail} = require('../middleware/posts');
+const {getPostsById, makeThumbnail, getCommentsByPostID} = require('../middleware/posts');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -53,10 +53,15 @@ router.post("/create", isLoggedIn, upload.single('videoUpload'), makeThumbnail, 
     }
 });
 /** posts/# */
-router.get('/:id(\\d+)', getPostsById, function(req, res, next) {
-    console.log("Rendering viewpost with data:", req.post);
-    res.render('viewpost', { title: 'Post' });
-  });
+router.get('/:id(\\d+)', getPostsById, getCommentsByPostID, function(req, res, next) {
+
+    res.render('viewpost', { 
+        title: 'Post',
+        currentPost: res.locals.currentPost,
+        comments: res.locals.currentPost.comments || []
+    });
+
+});
 
 
 /* GET view post page. 

@@ -46,9 +46,26 @@ module.exports = {
 
     },
 
-    getCommentsByPostID: async function(req,res,next){
+    getCommentsByPostID: async function(req, res, next) {
+        const postId = req.params.id;
+        try {
+            const [comments, _] = await db.execute(`
+                SELECT c.id, c.text, c.fk_post_id, c.fk_user_id, c.created_at, u.username 
+                FROM comments c 
+                JOIN users u ON u.id = c.fk_user_id
+                WHERE c.fk_post_id = ?
+            `, [postId]);
 
-        const postId = req.params.id;  
+            //res.locals.comments = comments;
+            res.locals.currentPost.comments = comments;
+            
+            next();
+        } catch(err) {
+            console.error("Error fetching comments:", err);
+            res.locals.comments = [];  // Set empty array in case of error
+            next(err);
+        }
+
     },
 
     getRecentPosts: async function(req,res,next){
