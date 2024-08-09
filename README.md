@@ -19,9 +19,22 @@ Please follow the instructions below and fill in the information requested when 
 # Build/Run Instructions
 
 ## Build Instructions
-1. steps here
-2. steps here
+1. npm install
+2. ipm run builddb
+3. add the following env vars to .env IN the application folder
+DB_HOST = "localhost"
+
+DB_USER = 'root'
+
+DB_PASSWORD= '12345678'
+
+DB_NAME = 'videoapp'
+
+DB_PORT = 3306
+
+APP_PORT = 3000
+ 
 
 ## Run Instructions
-1. steps here
-2. steps here 
+1. npm start
+

@@ -66,8 +66,28 @@ router.get('/viewpost/:id(\\d+)', function(req, res, next) {
 
 
 //localhost:3000/post/search?searchterm=term
-router.get("/search", function(req,res,next){
+router.get("/search", async function(req,res,next){
 
+
+    try{
+        const searchTerm = req.query.searchTerm;
+        const [rows,_] = await db.query(`select id,p.title, p.description,p.thumbnail, CONCAT_WS(' ', p.title, p.description) as haystack 
+                                        from posts p
+                                        having haystack
+                                        like ?;`,[`%${searchTerm}%`]);
+
+    if(rows.length){
+        res.locals.posts = rows;
+        res.render('index', { title: 'CSC 317 App',js: ['index.js'],searchTerm });
+    }else{
+        req.flash('error', `No results found for "${searchTerm}". Please try a different search term.`);
+        res.redirect('/');
+        
+    }
+
+    }catch(err){
+        next(err);
+    }
 });
 
 router.post("/like/:id(\\d+)", isLoggedIn, function(req,res,next){
