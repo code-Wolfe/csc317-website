@@ -5,7 +5,7 @@
         <p>{{currentPost.title}}</p>
         <div class="post-meta">
             <span class="username-wrapper"><a class="username-link">{{currentPost.username}}</a></span>
-            <span class="post-time">{{currentPost.created_at}}</span>
+            <span class="post-time">{{formatDate currentPost.created_at}}</span>
         </div>
 
             <video controls poster="#">

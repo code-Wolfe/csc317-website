@@ -45,6 +45,12 @@ app.engine(
       },
       json: function(context) {
         return JSON.stringify(context, null, 2);
+      },
+      formatDate: function(dateTimeString){
+        return new Date(dateTimeString).toLocaleString("en",{
+          dateStyle: "short",
+          timeStyle: "short",
+        })
       }
     }, //adding new helpers to handlebars for extra functionality
     
