@@ -114,7 +114,7 @@ router.get('/logout',async function(req,res,next){
 
 //user profile
 router.get('/:id(\\d+)', isLoggedIn, isMyProfile, async function(req,res,next){
-  //var userId = req.params.id;
+  //const userId = req.params.id;
   //res.render('profile');
 
   if(!req.session.user || !req.session.user.userId){
@@ -125,11 +125,29 @@ router.get('/:id(\\d+)', isLoggedIn, isMyProfile, async function(req,res,next){
 
 
   try{
-    const [user] = await db.query('SELECT * FROM users WHERE id = ?', [req.session.user.userId]);
 
-    if(!user) { return res.status(404).send('User not found');}
+    const userId = req.params.id;
+    console.log('user ID: ', userId);
 
-    res.render('profile', {title: 'User Profile', user: user[0]});
+
+    const [userRows] = await db.query('SELECT * FROM users WHERE id = ?', [req.session.user.userId]);
+
+    if(!userRows) { return res.status(404).send('User not found');}
+
+    
+    const [videoRows] = await db.execute(`
+      SELECT id, title, description, video, thumbnail, created_at 
+      FROM posts 
+      WHERE fk_user_id = ? 
+      ORDER BY created_at DESC
+    `, [userId]);
+    
+  const user = userRows[0];
+    res.render('profile', { 
+      title: 'User Profile', 
+      user: user,
+      videos: videoRows
+    });
   }catch(err){
     next(err);
   }

@@ -11,10 +11,11 @@
             {{#if isLoggedIn}}
                 <li class="nav-item"><a href="/users/logout" class="nav-link">Logout</a></li>
                 <li class="nav-item"><a href="/users/{{userId}}" class="nav-link">Profile</a></li>
+                <li class="nav-item"><a href="/postvideo" class="nav-link">Post Video</a></li>
             {{else}}   
                 <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
             {{/if}}
-            <li class="nav-item"><a href="/postvideo" class="nav-link">Post Video</a></li>
+            
         </ul>
     </nav>
 </header>

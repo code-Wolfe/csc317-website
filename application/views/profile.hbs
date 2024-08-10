@@ -1,11 +1,27 @@
-
 <div class="profile-container">
   <h1>{{title}}</h1>
   
   <div class="profile-info">
     <h2>Welcome, {{user.username}}!</h2>
     <p><strong>Email:</strong> {{user.email}}</p>
-
   </div>
 
+  <div class="user-videos">
+    <h3>Your Videos</h3>
+    {{#if videos.length}}
+      <div class="video-grid">
+        {{#each videos}}
+          <div class="video-card">
+            <a href="/posts/{{this.id}}">
+              <img src="/{{this.thumbnail}}" alt="{{this.title}}" class="video-thumbnail">
+              <h4 class="video-title">{{this.title}}</h4>
+            </a>
+            <p class="video-date">{{formatDate this.created_at}}</p>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p>You haven't uploaded any videos yet.</p>
+    {{/if}}
+  </div>
 </div>
