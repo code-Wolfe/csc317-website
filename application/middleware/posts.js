@@ -23,10 +23,11 @@ module.exports = {
 
     getPostsById: async function(req,res,next){
         const postId = req.params.id;
-        const sqlStr = "select p.id,p.title,p.description,p.created_at,p.video,u.username from posts p join users u on u.id = p.fk_user_id where p.id = ?;"
+        const sqlStr = 
+        "select p.id,p.title,p.description,p.created_at,p.video,u.username, (select count(*) from likes where fk_post_id = ?) from posts p join users u on u.id = p.fk_user_id where p.id = ?;"
         
         try{
-            const [rows, _ ] = await db.execute(sqlStr,[postId]);
+            const [rows, _ ] = await db.execute(sqlStr,[postId, postId]);
             const currentPost = rows[0];
             console.log("Post data:", req.post);
             if(!currentPost){

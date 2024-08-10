@@ -95,7 +95,62 @@ router.get("/search", async function(req,res,next){
     }
 });
 
-router.post("/like/:id(\\d+)", isLoggedIn, function(req,res,next){
+router.post("/like/:id(\\d+)", async function(req,res,next){
+    
+    try{
+        if(!req.session.user){
+            return res.json({
+                status: "error",
+                message: "you must be logged in to like a post"
+            }).status(401);
+        }
+
+        const postId = req.params.id;
+        const userId = req.session.user.userId;
+
+        var [rows,_] = await db.query('select * from likes where fk_post_id = ? AND fk_user_id = ?', [postId, userId]);
+
+        if(rows.length == 0){
+            //save new like
+            var [insertRes, _] = await db.query(`insert into likes (fk_post_id, fk_user_id) VALUE (?,?)`,[postId, userId]);
+            if(insertRes.affectedRows == 1){
+                return res.json({
+                    status: "success",
+                    message: "like saved",
+                    isLiked: true,
+                    likeCount:1
+                }).status(201);
+            } else{
+                return res.json({
+                     status: "error",
+                     message: "failed to save like"
+                })
+            }
+
+        } else if(rows.length == 1){
+            var [insertRes, __] = await db.query(`delete from likes where fk_post_id = ? AND fk_user_id = ?`,[postId, userId]);
+            if(insertRes.affectedRows == 1){
+                return res.json({
+                    status: "success",
+                    message: "like removed",
+                    isLiked: false,
+                    likeCount:0
+                }).status(201);
+            } else{
+                return res.json({
+                     status: "error",
+                     message: "failed to save like"
+                })
+            }
+        } else {
+            //something weird happened
+            next("something odd");
+        }
+        res.json(postId);
+    }catch(err){
+        next(err);
+    }
+    
 
 })
 

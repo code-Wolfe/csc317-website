@@ -23,7 +23,6 @@ if(commentButton){
         
         try{
             const text = document.getElementById('commentText');
-            console.log("TEST:" + text.value);
             if(!text.value){ return } 
 
             const postId = commentButton.dataset.postid;
@@ -59,6 +58,28 @@ if(commentButton){
 
 if(likeButton){
     likeButton.addEventListener('click', async function(ev){
-        console.log(ev);
+        try{
+            const postId = ev.currentTarget.dataset.postid;
+            var resp = await fetch(`/posts/like/${postId}`,{method:"POST"});
+            var data = await resp.json();
+            console.log(data);
+
+            if(data.status == "success"){
+                const likeCountElement = document.getElementById('likeCount');
+                likeCountElement.textContent = data.likeCount;
+
+                if(data.isLiked){
+                    this.classList.add('liked');
+                }else{
+                    this.classList.remove('liked');
+                }
+            }
+
+        }catch(err){
+            console.error(err);
+        }
+        
+        
     });
 }
+
