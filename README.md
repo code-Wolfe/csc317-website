@@ -12,7 +12,7 @@ Please follow the instructions below and fill in the information requested when 
 |:-------------:|:-------------:|
 | Student Name  | Max Cole      |
 | Student ID    |   |
-| Student Email | mcole6@sfsu.edu|
+| Student Email | |
 
 
 
